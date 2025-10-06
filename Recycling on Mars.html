@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mars Recycling System</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 30%, #0d1b2a 60%, #000814 100%);
+    color: #333;
+    line-height: 1.6;
+  }
+  .header {
+    background: linear-gradient(135deg, #8b6f47 0%, #6f5639 100%);
+    padding: 25px 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .header img {
+    height: 70px;
+    width: auto;
+  }
+  .header h1 {
+    color: #0a0e27;
+    font-size: 64px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(255,255,255,0.3);
+  }
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+  .overall-system {
+    text-align: center;
+    margin-bottom: 50px;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  }
+  .overall-system img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  .section-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .section-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+  .section-card:nth-child(2) {
+    background: linear-gradient(135deg, #ffe5d9 0%, #ffd4c2 100%);
+  }
+  .section-card:nth-child(3) {
+    background: linear-gradient(135deg, #ffd5c2 0%, #f5b895 100%);
+  }
+  .section-card:nth-child(4) {
+    background: linear-gradient(135deg, #d4a574 0%, #c49060 100%);
+  }
+  .section-card:nth-child(5) {
+    background: linear-gradient(135deg, #b8866e 0%, #a37256 100%);
+  }
+  .section-content {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .section-content.reverse {
+    flex-direction: row-reverse;
+  }
+  .section-image {
+    flex: 1;
+    min-width: 300px;
+    text-align: center;
+  }
+  .section-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  .section-text {
+    flex: 1;
+    min-width: 300px;
+  }
+  .section-text h2 {
+    color: #003366;
+    font-size: 28px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #99ccff;
+  }
+  .section-text p {
+    margin-bottom: 15px;
+    color: #444;
+    text-align: justify;
+  }
+  .expanded-content {
+    display: none;
+    margin-top: 15px;
+  }
+  .read-more-btn {
+    background: linear-gradient(135deg, #99ccff 0%, #6699ff 100%);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    box-shadow: 0 4px 10px rgba(102,153,255,0.3);
+  }
+  .read-more-btn:hover {
+    background: linear-gradient(135deg, #6699ff 0%, #3366cc 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(102,153,255,0.4);
+  }
+  .interface-section {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  }
+  .interface-section h2 {
+    color: #003366;
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 3px solid #99ccff;
+    padding-bottom: 15px;
+  }
+  .interface-section p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 16px;
+  }
+  .button-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    margin-top: 20px;
+  }
+  .category-btn, .product-btn, .back-btn, #start-production-btn {
+    border: none;
+    padding: 15px 35px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    min-width: 250px;
+  }
+  .category-btn:nth-child(1) {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  }
+  .category-btn:nth-child(1):hover {
+    background: linear-gradient(135deg, #ee5a6f 0%, #c44569 100%);
+  }
+  .category-btn:nth-child(2) {
+    background: linear-gradient(135deg, #ff9068 0%, #fd7953 100%);
+  }
+  .category-btn:nth-child(2):hover {
+    background: linear-gradient(135deg, #fd7953 0%, #e85d3f 100%);
+  }
+  .category-btn:nth-child(3) {
+    background: linear-gradient(135deg, #ffa45b 0%, #ff8e53 100%);
+  }
+  .category-btn:nth-child(3):hover {
+    background: linear-gradient(135deg, #ff8e53 0%, #e67842 100%);
+  }
+  .category-btn:nth-child(4) {
+    background: linear-gradient(135deg, #c49060 0%, #b07d54 100%);
+  }
+  .category-btn:nth-child(4):hover {
+    background: linear-gradient(135deg, #b07d54 0%, #9a6b47 100%);
+  }
+  .category-btn:nth-child(5) {
+    background: linear-gradient(135deg, #8b6f47 0%, #6f5639 100%);
+  }
+  .category-btn:nth-child(5):hover {
+    background: linear-gradient(135deg, #6f5639 0%, #5a4529 100%);
+  }
+  .product-btn {
+    background: linear-gradient(135deg, #99ccff 0%, #6699ff 100%);
+  }
+  .product-btn:hover {
+    background: linear-gradient(135deg, #6699ff 0%, #3366cc 100%);
+  }
+  .product-btn.panels-color {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  }
+  .product-btn.panels-color:hover {
+    background: linear-gradient(135deg, #ee5a6f 0%, #c44569 100%);
+  }
+  .product-btn.blocks-color {
+    background: linear-gradient(135deg, #ff9068 0%, #fd7953 100%);
+  }
+  .product-btn.blocks-color:hover {
+    background: linear-gradient(135deg, #fd7953 0%, #e85d3f 100%);
+  }
+  .product-btn.feedstock-color {
+    background: linear-gradient(135deg, #ffa45b 0%, #ff8e53 100%);
+  }
+  .product-btn.feedstock-color:hover {
+    background: linear-gradient(135deg, #ff8e53 0%, #e67842 100%);
+  }
+  .product-btn.insulators-color {
+    background: linear-gradient(135deg, #c49060 0%, #b07d54 100%);
+  }
+  .product-btn.insulators-color:hover {
+    background: linear-gradient(135deg, #b07d54 0%, #9a6b47 100%);
+  }
+  .product-btn.shielding-color {
+    background: linear-gradient(135deg, #8b6f47 0%, #6f5639 100%);
+  }
+  .product-btn.shielding-color:hover {
+    background: linear-gradient(135deg, #6f5639 0%, #5a4529 100%);
+  }
+  .back-btn {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+  }
+  .back-btn:hover {
+    background: linear-gradient(135deg, #5a6268 0%, #495057 100%);
+  }
+  #start-production-btn {
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+  }
+  #start-production-btn:hover {
+    background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
+  }
+  #category-view, #product-details {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+  }
+  #category-view h3, #product-details h3 {
+    color: #003366;
+    font-size: 26px;
+    margin-bottom: 25px;
+  }
+  .product-form {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 15px;
+    margin: 20px 0;
+    width: 100%;
+    max-width: 600px;
+  }
+  .form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  .form-row label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-weight: 600;
+    color: #003366;
+  }
+  .form-row input[type="number"] {
+    padding: 8px 12px;
+    border: 2px solid #99ccff;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 120px;
+  }
+  .form-row input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #003366;
+  }
+  @media (max-width: 768px) {
+    .section-content {
+      flex-direction: column;
+    }
+    .section-content.reverse {
+      flex-direction: column;
+    }
+    .header h1 {
+      font-size: 24px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <img src="assets/logo.png" alt="Project Martian Recycling Logo">
+  <h1>PROJECT MARTIAN</h1>
+</div>
+
+<div class="container">
+
+  <!-- Overall System Image -->
+  <div class="overall-system">
+    <img src="assets/Overall System.jpg" alt="Overall Mars Recycling System">
+  </div>
+
+  <!-- Section 1: Ceramic and Metal -->
+  <div class="section-card">
+    <div class="section-content">
+      <div class="section-image">
+        <img src="assets/Ceramics and Metal Smashing and Wearing Down.png" alt="Ceramic and Metal Processing">
+      </div>
+      <div class="section-text">
+        <h2>Ceramic and Metal smashing and wearing down</h2>
+        <p>Both ceramic and metallic waste pose major challenges for recycling in an off-world environment like Mars — they're extremely durable, non-degradable, and typically require large amounts of energy to melt or reshape. Because of that, the system avoids high-temperature and chemical breakdown processes altogether. Instead, it uses a progressive mechanical and abrasive approach that takes advantage of regolith's natural roughness and mineral composition to wear these materials down safely and efficiently.</p>
+        <div id="content1" class="expanded-content">
+          <p>The process begins with pre-sorting: metal and ceramic fragments are separated from other waste streams and fed into a gravity-assisted crusher. This unit uses impact hammers or hydraulic pistons to shatter large fragments into smaller, more manageable pieces. The design intentionally avoids extreme compression forces that could cause unwanted heating or spark generation, which is important for both safety and energy conservation in a low-atmosphere habitat.</p>
+          <p>After initial crushing, the fragments enter the abrasive wearing chamber. Here, the system uses a closed-loop flow of Martian regolith particles — essentially, a stream of fine, sharp dust that acts as a natural sandblasting medium. The regolith continuously circulates around the fragments, gradually eroding their surfaces. Because Martian soil contains silicates and oxides of iron, magnesium, and aluminum (based on current simulant analyses), it's naturally gritty and chemically stable, making it ideal for gradual abrasion. This method doesn't require water or chemical agents, only moderate mechanical energy to keep the regolith in motion.</p>
+          <p>For ceramics, the process primarily reduces them into fine granules or powder, which can later be sintered or blended into the Ecolith hybrid brick mix to improve compressive strength and radiation resistance. Ceramics don't chemically react with the regolith or CO₂ atmosphere, so they remain completely inert during processing. Dust generated during grinding is captured in a filtration and containment system and either reused directly or pressed into larger aggregates.</p>
+          <p>For metals, the focus is on controlled deformation rather than complete fragmentation. The system employs rotating rollers and vibrational hammers that repeatedly strike and flatten the material. As the metal hardens through mechanical stress, microfractures begin to form, making it more brittle and easier to chip away in subsequent passes. Small amounts of regolith are again introduced between the rollers — its abrasive particles accelerate surface wear and help detach thin flakes. Eventually, the metal is reduced to coarse shavings or fine flakes, which can be magnetically separated from the dust. These flakes can then be compacted in the cold-compression press to create tools, rods, or structural inserts.</p>
+          <p>By avoiding melting, this approach eliminates toxic fume production (which would otherwise occur with alloys containing zinc, lead, or volatile metals) and minimizes power consumption — both crucial advantages in a Martian habitat where energy and filtration resources are limited. Every particle generated, whether ceramic dust or metallic powder, is captured within a sealed environment to prevent contamination and can be fed back into other Ecolith systems for reuse.</p>
+        </div>
+        <button class="read-more-btn" onclick="toggleContent('content1', this)">Read More</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Hybrid Blocks -->
+  <div class="section-card">
+    <div class="section-content reverse">
+      <div class="section-image">
+        <img src="assets/Hybrid (glass, plastic, regolith and optional CO2) blocks.png" alt="Hybrid Ecolith Blocks">
+      </div>
+      <div class="section-text">
+        <h2>Hybrid (glass, plastic, regolith and optional CO₂) blocks</h2>
+        <p>The hybrid block system, known as Ecolith, is one of the central components of the entire recycling setup, a process designed to merge Martian materials with human waste products into a durable, multi-purpose construction material. These hybrid blocks are formed from a mix of shredded plastic, crushed glass, sieved regolith, and optionally pressurized CO₂ extracted from the habitat atmosphere or astronaut respiration. The result is a structural composite material that provides insulation, radiation protection, and mechanical strength while drastically reducing the colony's reliance on Earth-supplied building materials.</p>
+        <div id="content2" class="expanded-content">
+          <p>The process begins with material sorting and preparation. Recycled plastics are shredded and cleaned to remove contaminants. Glass waste is crushed and sieved to produce uniform grain sizes that can blend evenly with the regolith. Martian regolith itself, rich in oxides of iron, silicon, and magnesium, acts as the primary stabilizing agent. Its fine grains bond mechanically and chemically with molten or softened polymers, while also improving thermal mass and shielding against cosmic radiation.</p>
+          <p>Once materials are prepared, they are loaded into a mixer where the plastics, glass, and regolith are evenly distributed into a uniform mixture. In some variants, CO₂ is injected into the chamber under controlled pressure (around 5-10 atmospheres) to promote the formation of carbonate compounds when interacting with oxides in the regolith. This reaction subtly hardens the matrix, improving the final block's compressive strength.</p>
+          <p>The blended mixture is then transferred into the vacuum bag press, a modular compression system capable of applying pressures of 50–100 MPa. The chamber can be heated depending on the desired properties of the final product: Low-temperature cycles (150–300 °C) soften the plastic fraction, allowing it to fuse with the glass and regolith without melting fully. High-temperature cycles (up to 800 °C) can be used for partial sintering of glass and ceramic fragments, increasing rigidity and structural integrity in external-use blocks.</p>
+          <p>This press operates as a closed-loop unit, preventing the release of microplastics or volatile compounds. Any fine dust generated during compression is filtered, collected, and reused in the next batch. The molds are modular, allowing astronauts to choose from various shapes and thicknesses, ranging from solid bricks and wall panels to hollow insulation blocks or reinforcement tiles.</p>
+          <p>These blocks can be used for external walls, reinforcements, or base-layer foundations, serving as a universal construction medium for Martian habitats. They are completely recyclable within the same system, since broken blocks can be crushed and reprocessed into new ones, keeping the material cycle continuous.</p>
+        </div>
+        <button class="read-more-btn" onclick="toggleContent('content2', this)">Read More</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Polymer Recycling -->
+  <div class="section-card">
+    <div class="section-content">
+      <div class="section-image">
+        <img src="assets/Polymer (ABS, PET, PLA) recycling system.png" alt="Polymer Recycling System">
+      </div>
+      <div class="section-text">
+        <h2>Polymer (ABS, PET, PLA) recycling system</h2>
+        <p>The polymer recycling system focuses on recovering and reprocessing engineering-grade thermoplastics, specifically ABS, PET, and PLA. These materials are essential for 3D printing, toolmaking, and small-scale manufacturing within the Martian habitat. Unlike general-purpose plastics, these polymers can be reheated and reshaped multiple times without significant loss of structural integrity, making them ideal candidates for a closed-loop material cycle.</p>
+        <div id="content3" class="expanded-content">
+          <p>The system begins with collection and sorting, where polymer waste from packaging, broken components, or failed 3D prints is categorized based on type. Sorting can be performed manually or automatically using infrared or density-based separation, as each polymer has a distinct spectral and mass signature. Clean polymers are then fed into the shredding and flake preparation stage, which grinds the material into uniform flakes approximately 3–5 mm in size. Any impurities, such as dust or leftover adhesives, are removed through an air filtration and washing process to ensure consistency in the re-melted product.</p>
+          <p>Then, the flakes enter a low-energy extruder system designed for Martian efficiency. The extruder gently heats the polymer to its softening temperature instead of its full decomposition range: PET: 230–260 °C, ABS: 200–250 °C, PLA: 170–200 °C. As the polymer melts, it's filtered through a fine mesh system that captures any remaining contaminants and microplastics. The molten material is then passed through calibrated nozzles into strands, cooled in a controlled chamber, and wound onto spools to form 3D printing filament. The system can automatically adjust nozzle size and speed to produce standard 1.75 mm or 2.85 mm filaments depending on printer requirements.</p>
+          <p>This recycling process not only creates new filament but also accepts failed or support material from printed parts back into the system. By grinding and reusing these remnants, the process achieves a nearly zero-waste cycle for polymers, where every gram of material remains within use for tools, spare parts, or habitat replacement parts.</p>
+          <p>For added material strength, the system could optionally blend polymer flakes with powdered glass, ceramic dust, or natural fiber residues, forming new composite filaments that could work in creating pieces with a higher temperature or stress resistance.</p>
+          <p>In terms of safety and sustainability, the system operates in a sealed enclosure equipped with HEPA and activated carbon filters to capture fumes and contaminating particles. Because Mars' ambient atmosphere is low in oxygen, the risk of combustion is minimal, allowing the heating elements to work at lower wattage compared to Earth-based systems.</p>
+        </div>
+        <button class="read-more-btn" onclick="toggleContent('content3', this)">Read More</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: Metal Scraps -->
+  <div class="section-card">
+    <div class="section-content reverse">
+      <div class="section-image">
+        <img src="assets/Metal scraps storage and processing.png" alt="Metal Scraps Storage and Processing">
+      </div>
+      <div class="section-text">
+        <h2>Metal scraps storage and processing</h2>
+        <p>Once metals are separated from other waste streams, the focus shifts to maximizing their safe reuse and minimizing energy-intensive operations like smelting. The metal recycling system is designed to handle bulk scraps efficiently, emphasizing mechanical rather than thermal treatment due to Mars' limited resources.</p>
+        <div id="content4" class="expanded-content">
+          <p>Metal scraps—originating from tools, machinery, or habitat components—are first sorted by type and magnetic properties (ferrous and non-ferrous). After sorting, aerosol dust filters capture fine particles to prevent contamination of the habitat environment. Larger pieces are rolled, hammered, or abraded using regolith-based abrasive systems, taking advantage of Mars' naturally rough, silicate-rich soil to wear down edges and remove oxidation. This process gradually refines the surface and reduces bulky metal into more manageable pieces without extreme heat or chemical exposure.</p>
+          <p>The resulting smaller fragments are then either stored in pressurized, inert containers for later reprocessing or fed into small-scale cold presses or plasma cutters that reshape them into usable components—like brackets, tool parts, or structural fittings. This modular, low-energy method ensures metal resources are preserved and hazardous reactions from melting or ionizing are avoided, maintaining both crew safety and system sustainability within the closed-loop habitat.</p>
+          <p>Next to the storage is a small airlock that could connect to the habitat itself to allow easy access to scrap parts. You can also see the command module near the top, where the interface that astronauts interact with would be shown.</p>
+        </div>
+        <button class="read-more-btn" onclick="toggleContent('content4', this)">Read More</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interface Section -->
+  <div class="interface-section">
+    <h2>Interface</h2>
+    <p>This is the control interface that astronauts use to command the Mars Recycling System.</p>
+    
+    <div id="main-buttons" class="button-grid">
+      <button class="category-btn" onclick="showCategory('Panels')">Panels</button>
+      <button class="category-btn" onclick="showCategory('Blocks / Bricks')">Blocks / Bricks</button>
+      <button class="category-btn" onclick="showCategory('Feedstock / Filaments')">Feedstock / Filaments</button>
+      <button class="category-btn" onclick="showCategory('Insulators / Padding')">Insulators / Padding</button>
+      <button class="category-btn" onclick="showCategory('Shielding')">Shielding</button>
+    </div>
+
+    <div id="category-view"></div>
+    <div id="product-details"></div>
+  </div>
+
+</div>
+
+<script>
+function toggleContent(id, btn) {
+  const el = document.getElementById(id);
+  if (el.style.display === 'none' || el.style.display === '') {
+    el.style.display = 'block';
+    btn.textContent = 'Read Less';
+  } else {
+    el.style.display = 'none';
+    btn.textContent = 'Read More';
+  }
+}
+
+const categories = {
+  "Panels": ["Molded Panels", "Tiles_PG", "Tiles_Ceramic", "Panels_Composite", "Carbon Fiber Panel", "Metal Sheets"],
+  "Blocks / Bricks": ["Bricks_PG", "Bricks_Ceramic", "Resin Composite Block", "Filler Materials"],
+  "Feedstock / Filaments": ["3D Printing Feedstock", "Granules"],
+  "Insulators / Padding": ["Mats", "Padding", "Insulation", "Layered Filtration Media", "Foam Packaging", "Bubble Wrap", "Air Cushion Bags"],
+  "Shielding": ["Shielding"]
+};
+
+const categoryColors = {
+  "Panels": "panels-color",
+  "Blocks / Bricks": "blocks-color",
+  "Feedstock / Filaments": "feedstock-color",
+  "Insulators / Padding": "insulators-color",
+  "Shielding": "shielding-color"
+};
+
+function showCategory(name) {
+  document.getElementById("main-buttons").style.display = "none";
+  const view = document.getElementById("category-view");
+  view.innerHTML = `<h3>${name}</h3>`;
+  const colorClass = categoryColors[name];
+  categories[name].forEach(p => {
+    const btn = document.createElement('button');
+    btn.className = `product-btn ${colorClass}`;
+    btn.textContent = p;
+    btn.onclick = () => showProduct(p, name);
+    view.appendChild(btn);
+  });
+  const backBtn = document.createElement('button');
+  backBtn.className = 'back-btn';
+  backBtn.textContent = 'Back';
+  backBtn.onclick = backToMain;
+  view.appendChild(backBtn);
+  view.style.display = "flex";
+}
+
+function backToMain() {
+  document.getElementById("category-view").style.display = "none";
+  document.getElementById("product-details").style.display = "none";
+  document.getElementById("main-buttons").style.display = "flex";
+}
+
+function showProduct(name, category) {
+  const view = document.getElementById("product-details");
+  document.getElementById("category-view").style.display = "none";
+  view.style.display = "flex";
+  view.innerHTML = `
+    <h3>${name}</h3>
+    <div class="product-form">
+      <div class="form-row">
+        <label>
+          Length (m):
+          <input type="number" id="length" value="1" step="0.01" min="0.01" max="10">
+        </label>
+        <label>
+          Width (m):
+          <input type="number" id="width" value="0.5" step="0.01" min="0.01" max="10">
+        </label>
+        <label>
+          Height (m):
+          <input type="number" id="height" value="0.02" step="0.001" min="0.001" max="10">
+        </label>
+      </div>
+      <div class="form-row">
+        <label>
+          Batch Size:
+          <input type="number" id="batch" value="1" min="1" max="100">
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="regolith">
+          Add Regolith
+        </label>
+      </div>
+    </div>
+    <button id="start-production-btn" onclick="startProduction('${name}')">Start Production</button>
+    <button class="back-btn" onclick="showCategory('${category}')">Back</button>
+  `;
+}
+
+function startProduction(productName) {
+  const l = parseFloat(document.getElementById('length').value);
+  const w = parseFloat(document.getElementById('width').value);
+  const h = parseFloat(document.getElementById('height').value);
+  const batch = parseInt(document.getElementById('batch').value);
+  const regolith = document.getElementById('regolith').checked;
+  let time = (l * w * h * batch * 1000);
+  if (regolith) time *= 1.5;
+  alert(`Production started for ${productName}!\n\nDimensions: ${l}m × ${w}m × ${h}m\nBatch Size: ${batch}\nRegolith Addition: ${regolith ? 'Yes' : 'No'}\n\nEstimated time: ${Math.round(time)} seconds`);
+}
+</script>
+
+</body>
+</html>
